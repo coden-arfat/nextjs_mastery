@@ -9,9 +9,11 @@ export default function Home() {
 
     <>
     <h1>
-      hello world
+      Data Fetching Using getServerSideProps
       
     </h1>
+
+
     </>
 
   )
