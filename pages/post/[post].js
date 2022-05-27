@@ -3,12 +3,17 @@ import React from 'react'
 import Link from 'next/link'
 import Navbar from '../../componets/Navbar'
 import { redirect } from 'next/dist/server/api-utils'
-
-function post({data}) {
+import Error from './Error'
+function post({data,error}) {
+  
+  if(error){
+   return <Error statusCode={error}/>
+  }
   return (
 
     <>
     <Navbar/>
+
     <div className='continer'>
     <h1>
         Post
@@ -45,18 +50,18 @@ export  async function getServerSideProps(context,res){
   console.log(rest.statusCode)
   const errorCode = rest.ok ? false : 404;
 
-if (errorCode) {
-  console.log(errorCode)
-  return {
-    redirect: {
-      destination: '/',
-      permanent: false,
-    }
-  }
-}
+// if (errorCode) {
+//   console.log(errorCode)
+//   return {
+//     redirect: {
+//       destination: '/404',
+//       permanent: false,
+//     }
+//   }
+// }
   const dataJs = await rest.json()
   const data =[dataJs]
-  return { props: {'data':data} }
+  return { props: {'data':data,"error":errorCode} }
 }
 
 export default post
